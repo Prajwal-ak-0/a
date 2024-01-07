@@ -19,6 +19,9 @@ import {
 } from "@/components/ui/form";
 import { CardWrapper } from "@/components/Auth/CardWrapper";
 import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/FormError";
+import { FormSuccess } from "@/components/FormSuccess";
+import { login } from "@/actions/login";
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -42,10 +45,8 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setError("");
-    setSuccess("");
-    
-    
+    console.log("values", values);
+    login(values);
   };
 
   return (
@@ -126,7 +127,8 @@ export const LoginForm = () => {
               </>
             )}
           </div>
-
+          <FormError message={error || urlError} />
+          <FormSuccess message={success} />
           <Button disabled={isPending} type="submit" className="w-full">
             {showTwoFactor ? "Confirm" : "Login"}
           </Button>
